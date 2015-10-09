@@ -109,8 +109,7 @@ func Publishv1(input chan []*FileEvent,
 				n, err := socket.Read(response[len(response):cap(response)])
 				if err != nil {
 					emit("Read error looking for ack: %s\n", err)
-					socket.Close()
-					socket = connect(config)
+					oops(err)
 					continue SendPayload // retry sending on new connection
 				} else {
 					ackbytes += n
